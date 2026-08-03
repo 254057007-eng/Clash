@@ -114,7 +114,7 @@ proxy-groups:
     icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Daily.png'
 
   - name: 漏网之鱼
-    <<: [*baseSelect, *preferDirect]
+    <<: [*baseSelect, *preferUrltest]
     icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Drill.png'
 
   - name: 自动选择
