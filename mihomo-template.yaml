@@ -5,17 +5,18 @@
 # ============================================================
 # 锚点定义
 # ============================================================
-baseProvider: &baseProvider {type: http, interval: 3600, proxy: DIRECT, header: {User-Agent: ['clash.meta', 'clash.verge', 'mihomo']}, override: {additional-prefix: '[***]'}, health-check: {enable: true, interval: 3600, lazy: true, url: 'https://g.cn/generate_204'}}
+baseProvider: &baseProvider {type: http, interval: 3600, proxy: DIRECT, header: {User-Agent: ['clash.meta/v1.19.29', 'clash-verge/v2.5.2', 'mihomo']}, override: {additional-prefix: '[***]'}, health-check: {enable: true, interval: 3600, lazy: true, url: 'https://g.cn/generate_204'}}
 filterHK: &filterHK {filter: '(?i)(港|🇭🇰|(?<![A-Za-z])HK(?![A-Za-z])|Hong|HKG)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Hong_Kong.png'}
 filterSG: &filterSG {filter: '(?i)(坡|狮城|🇸🇬|(?<![A-Za-z])SG(?![A-Za-z])|Sing|SIN|XSP)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Singapore.png'}
 filterJP: &filterJP {filter: '(?i)(日|🇯🇵|(?<![A-Za-z])JP(?![A-Za-z])|Japan|NRT|HND|KIX|CTS|FUK)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Japan.png'}
 filterKR: &filterKR {filter: '(?i)(韩|🇰🇷|韓|首尔|南朝鲜|(?<![A-Za-z])KR(?![A-Za-z])|KOR|Korea|South)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Korea.png'}
 filterUS: &filterUS {filter: '(?i)(美|🇺🇸|(?<![A-Za-z])US(?![A-Za-z])|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/United_States.png'}
 filterTW: &filterTW {filter: '(?i)(台|🇹🇼|(?<![A-Za-z])TW(?![A-Za-z])|tai|TPE|TSA|KHH)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/China.png'}
+filterCFYX: &filterCFYX {filter: '(?i)(优|优选|域名)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Siri.png'}
 filterOther: &filterOther {exclude-filter: '(?i)(港|🇭🇰|(?<![A-Za-z])HK(?![A-Za-z])|Hong|HKG|坡|🇸🇬|(?<![A-Za-z])SG(?![A-Za-z])|Sing|SIN|XSP|日|🇯🇵|(?<![A-Za-z])JP(?![A-Za-z])|Japan|NRT|HND|KIX|CTS|FUK|韩|🇰🇷|韓|首尔|南朝鲜|(?<![A-Za-z])KR(?![A-Za-z])|KOR|Korea|South|美|🇺🇸|(?<![A-Za-z])US(?![A-Za-z])|USA|SJC|JFK|LAX|ORD|ATL|DFW|SFO|MIA|SEA|IAD|台|🇹🇼|(?<![A-Za-z])TW(?![A-Za-z])|tai|TPE|TSA|KHH)', include-all: true, icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/World_Map.png'}
-preferUrltest: &preferUrltest {proxies: [自动选择, DIRECT, 手动选择, REJECT, 香港, 日本, 韩国, 美国, 新加坡, 台湾省, 其他节点, 负载均衡, 故障切换]}
-preferDirect: &preferDirect {proxies: [DIRECT, 自动选择, 手动选择, REJECT, 香港, 日本, 韩国, 美国, 新加坡, 台湾省, 其他节点, 负载均衡, 故障切换]}
-preferReject: &preferReject {proxies: [REJECT, 自动选择, 手动选择, DIRECT, 香港, 日本, 韩国, 美国, 新加坡, 台湾省, 其他节点, 负载均衡, 故障切换]}
+preferUrltest: &preferUrltest {proxies: [自动选择, DIRECT, 手动选择, REJECT, CF优选, 香港, 日本, 韩国, 美国, 新加坡, 台湾省, 其他节点, 负载均衡, 故障切换]}
+preferDirect: &preferDirect {proxies: [DIRECT, 自动选择, 手动选择, REJECT, CF优选, 香港, 日本, 韩国, 美国, 新加坡, 台湾省, 其他节点, 负载均衡, 故障切换]}
+preferReject: &preferReject {proxies: [REJECT, 自动选择, 手动选择, DIRECT, CF优选, 香港, 日本, 韩国, 美国, 新加坡, 台湾省, 其他节点, 负载均衡, 故障切换]}
 baseSelect: &baseSelect {type: select, lazy: true, timeout: 3000, max-failed-times: 3, empty-fallback: REJECT, hidden: false, url: 'https://g.cn/generate_204'}
 baseUrltest: &baseUrltest {type: url-test, interval: 1800, lazy: true, timeout: 3000, max-failed-times: 3, empty-fallback: REJECT, tolerance: 200, hidden: true, url: 'https://g.cn/generate_204'}
 baseFallback: &baseFallback {type: fallback, interval: 1800, lazy: true, timeout: 3000, max-failed-times: 3, empty-fallback: REJECT, include-all: true, hidden: true, url: 'https://g.cn/generate_204'}
@@ -53,8 +54,8 @@ ipv6: false
 tcp-concurrent: true
 unified-delay: true
 find-process-mode: strict
-keep-alive-interval: 15
-keep-alive-idle: 600
+keep-alive-interval: 60
+keep-alive-idle: 60
 
 experimental:
   quic-go-disable-gso: true
@@ -102,7 +103,7 @@ ntp:
   interval: 60
 
 # ============================================================
-# 策略组 — 23 组，保留小号最新生产架构
+# 策略组 — EDT 对齐利群规则架构（保留已验证的本地定制）
 # ============================================================
 proxy-groups:
   - name: 打包代理
@@ -147,57 +148,109 @@ proxy-groups:
     <<: [*baseSelect, *preferDirect]
     icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Cloudflare.png'
 
+  # EDT 小号面板同步节点名称含“优选”，独立分组便于优先使用或排障。
+  - name: CF优选
+    <<: [*baseSelect, *filterCFYX]
+    proxies: [CF优选-自动选择, CF优选-故障转移]
+
+  - name: CF优选-自动选择
+    <<: [*baseUrltest, *filterCFYX]
+
+  - name: CF优选-故障转移
+    <<: [*baseFallback, *filterCFYX]
+
+  - name: AI
+    <<: [*baseSelect, *preferUrltest]
+    icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/AI.png'
+
+  - name: Telegram
+    <<: [*baseSelect, *preferUrltest]
+    icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Telegram.png'
+
+  - name: Google
+    <<: [*baseSelect, *preferUrltest]
+    icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google.png'
+
+  - name: GoogleFCM
+    <<: [*baseSelect, *preferUrltest]
+    icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/Google.png'
+
+  - name: Youtube
+    <<: [*baseSelect, *preferUrltest]
+    icon: 'https://testingcf.jsdelivr.net/gh/Koolson/Qure@master/IconSet/Color/YouTube.png'
+
   - name: 香港
     <<: [*baseSelect, *filterHK]
-    proxies: [香港-自动选择]
+    proxies: [香港-自动选择, 香港-故障转移]
 
   - name: 香港-自动选择
     <<: [*baseUrltest, *filterHK]
 
+  - name: 香港-故障转移
+    <<: [*baseFallback, *filterHK]
+
   - name: 日本
     <<: [*baseSelect, *filterJP]
-    proxies: [日本-自动选择]
+    proxies: [日本-自动选择, 日本-故障转移]
 
   - name: 日本-自动选择
     <<: [*baseUrltest, *filterJP]
 
+  - name: 日本-故障转移
+    <<: [*baseFallback, *filterJP]
+
   - name: 韩国
     <<: [*baseSelect, *filterKR]
-    proxies: [韩国-自动选择]
+    proxies: [韩国-自动选择, 韩国-故障转移]
 
   - name: 韩国-自动选择
     <<: [*baseUrltest, *filterKR]
 
+  - name: 韩国-故障转移
+    <<: [*baseFallback, *filterKR]
+
   - name: 美国
     <<: [*baseSelect, *filterUS]
-    proxies: [美国-自动选择]
+    proxies: [美国-自动选择, 美国-故障转移]
 
   - name: 美国-自动选择
     <<: [*baseUrltest, *filterUS]
 
+  - name: 美国-故障转移
+    <<: [*baseFallback, *filterUS]
+
   - name: 新加坡
     <<: [*baseSelect, *filterSG]
-    proxies: [新加坡-自动选择]
+    proxies: [新加坡-自动选择, 新加坡-故障转移]
 
   - name: 新加坡-自动选择
     <<: [*baseUrltest, *filterSG]
 
+  - name: 新加坡-故障转移
+    <<: [*baseFallback, *filterSG]
+
   - name: 台湾省
     <<: [*baseSelect, *filterTW]
-    proxies: [台湾省-自动选择]
+    proxies: [台湾省-自动选择, 台湾省-故障转移]
 
   - name: 台湾省-自动选择
     <<: [*baseUrltest, *filterTW]
 
+  - name: 台湾省-故障转移
+    <<: [*baseFallback, *filterTW]
+
   - name: 其他节点
     <<: [*baseSelect, *filterOther]
-    proxies: [其他节点-自动选择]
+    proxies: [其他节点-自动选择, 其他节点-故障转移]
 
   - name: 其他节点-自动选择
     <<: [*baseUrltest, *filterOther]
 
+  - name: 其他节点-故障转移
+    <<: [*baseFallback, *filterOther]
+
 # ============================================================
-# rule-providers — 26 个，保留小号最新生产全部规则源
+# rule-providers — 30 个（保留 Disney，补齐利群近期规则源）
 # ============================================================
 rule-providers:
   category-ads-all:
@@ -304,8 +357,24 @@ rule-providers:
     <<: *rulesetDN
     url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/disney.mrs
 
+  games-cn:
+    <<: *rulesetDN
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/category-games@cn.mrs
+
+  nvidia-cn:
+    <<: *rulesetDN
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/nvidia@cn.mrs
+
+  tiktok:
+    <<: *rulesetDN
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/tiktok.mrs
+
+  spotify:
+    <<: *rulesetDN
+    url: https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@meta/geo/geosite/spotify.mrs
+
 # ============================================================
-# 规则 — 保留小号最新生产全部规则顺序
+# 规则 — 业务优先、广告拦截、国内直连与最终代理收口
 # ============================================================
 rules:
   - RULE-SET,category-ads-all,广告拦截
@@ -315,21 +384,25 @@ rules:
   - RULE-SET,privateip,打包直连,no-resolve
   - RULE-SET,apple_cn,打包直连
   - RULE-SET,microsoft_cn,打包直连
-  - RULE-SET,telegram,打包代理
+  - RULE-SET,games-cn,打包直连
+  - RULE-SET,nvidia-cn,打包直连
+  - RULE-SET,telegram,Telegram
+  - RULE-SET,tiktok,打包代理
+  - RULE-SET,spotify,打包代理
   - RULE-SET,steam,打包代理
-  - RULE-SET,ai,打包代理
+  - RULE-SET,ai,AI
   - RULE-SET,apple,打包代理
-  - RULE-SET,googlefcm,打包代理
-  - RULE-SET,youtube,打包代理
-  - RULE-SET,google,打包代理
+  - RULE-SET,googlefcm,GoogleFCM
+  - RULE-SET,youtube,Youtube
+  - RULE-SET,google,Google
   - RULE-SET,docker,打包代理
   - RULE-SET,github,打包代理
   - RULE-SET,twitter,打包代理
   - RULE-SET,microsoft,打包代理
   - RULE-SET,netflix,打包代理
   - RULE-SET,disney,打包代理
-  - RULE-SET,telegramip,打包代理,no-resolve
-  - RULE-SET,googleip,打包代理,no-resolve
+  - RULE-SET,telegramip,Telegram,no-resolve
+  - RULE-SET,googleip,Google,no-resolve
   - RULE-SET,twitterip,打包代理,no-resolve
   - RULE-SET,gfw,打包代理
   - RULE-SET,geolocation-cn,打包直连
